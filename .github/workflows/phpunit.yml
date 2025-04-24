@@ -1,25 +1,19 @@
-name: PHPUnit Tests
-on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-
-jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
-            - name: Set up PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '7.4'
-                  extensions: mbstring, intl, bcmath, pdo, mysqli
-
-            - name: Install Composer dependencies
-              run: composer install --no-interaction
-
-            - name: Run PHPUnit tests
-              run: ./vendor/bin/phpunit --coverage-text
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd">
+    <testsuites>
+        <testsuite name="Tests">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">app</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+    </php>
+</phpunit>
